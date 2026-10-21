@@ -1,0 +1,196 @@
+---
+import Base from "../layouts/Base.astro";
+import Occasioni from "../components/Occasioni.astro";
+import Galleria from "../components/Galleria.astro";
+import Recapiti from "../components/Recapiti.astro";
+import FormEvento from "../components/FormEvento.astro";
+import IconaWhatsApp from "../components/IconaWhatsApp.astro";
+import HeroSfondo from "../components/HeroSfondo.astro";
+import { SITE } from "../config.mjs";
+import { OCCASIONI } from "../data/occasioni.mjs";
+import heroFoto from "../assets/foto/hero-tavolata-pizza-01.jpg";
+
+const menu = [
+  { href: "#organizza", testo: "Cosa organizzare" },
+  { href: "#spazio", testo: "Lo spazio" },
+  { href: "#come-funziona", testo: "Come funziona" },
+  { href: "/corsi-e-riunioni/", testo: "Corsi e riunioni" },
+  { href: "#faq", testo: "Domande" },
+];
+
+const dotazioni = [
+  { titolo: "Tavoli e sedie per tutti", testo: "Fino a 30-40 persone sedute, nonni compresi.", icona: '<path d="M3 9h18M5 9v11M19 9v11M8 9V5h8v4"/>' },
+  { titolo: "Angolo bimbi", testo: "Tappeti, giochi e libri, semplice e sempre a vista.", icona: '<rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/><rect x="7.5" y="5" width="7" height="7" rx="1"/>' },
+  { titolo: "TV grande", testo: "Per le partite, un film o le foto della festa.", icona: '<rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>' },
+  { titolo: "Fornetto per scaldare", testo: "Per tenere calde pizze e teglie. Non si cucina.", icona: '<rect x="3" y="5" width="18" height="14" rx="2"/><rect x="6" y="8" width="9" height="8" rx="1"/><path d="M18 9v.01M18 12v.01"/>' },
+  { titolo: "Frigorifero", testo: "Per torte, bibite e tutto ciò che portate.", icona: '<rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M5 10h14M8.5 6v1.5M8.5 13v3"/>' },
+  { titolo: "Bagno", testo: "All’interno del locale. E dentro si sta al caldo, anche d’inverno.", icona: '<path d="M12 3c3 4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-7 6-11z"/>' },
+];
+
+const regole = [
+  { icona: "🙋", titolo: "Un adulto responsabile", testo: "La prenotazione è sempre a nome di un adulto, che resta presente per tutto il tempo." },
+  { icona: "🔑", titolo: "Una piccola cauzione", testo: "La chiediamo alla prenotazione e ve la restituiamo dopo aver ripreso le chiavi." },
+  { icona: "🕰️", titolo: "Orari chiari", testo: "Si entra e si esce nella fascia prenotata, così chi viene dopo trova tutto pronto." },
+  { icona: "🤫", titolo: "Rispetto per i vicini", testo: "Siamo in centro: dopo le 22 abbassiamo musica e voci, anche uscendo." },
+  { icona: "🎈", titolo: "Decorate pure", testo: "Festoni e palloncini sono benvenuti. Niente chiodi, puntine o nastro adesivo sui muri." },
+  { icona: "♻️", titolo: "Rifiuti nei sacchi", testo: "Raccogliete i rifiuti nei sacchi prima di uscire: alle pulizie pensiamo noi." },
+];
+
+const faq = [
+  { d: "Possiamo portare il nostro cibo?", r: "Sì, è proprio l’idea. Pizze d’asporto, torte, rinfreschi fatti in casa: scegliete voi cosa portare e da chi ordinare." },
+  { d: "Si può cucinare?", r: "No, nel locale non c’è una cucina. C’è un fornetto per scaldare e un frigorifero per tenere al fresco bibite e dolci." },
+  { d: "Quante persone ci stanno?", r: "Fino a 30-40 persone, tra adulti e bambini. Se siete di più, scriveteci e valutiamo insieme." },
+  { d: "Possiamo decorare?", r: "Certo: festoni, palloncini e tovaglie colorate sono benvenuti. Vi chiediamo solo di non usare chiodi, puntine o nastro adesivo sui muri." },
+  { d: "Chi pulisce alla fine?", r: "Ci pensiamo noi. Vi chiediamo solo di raccogliere i rifiuti nei sacchi e lasciare lo spazio in ordine." },
+  { d: "Quanto costa?", r: "Dipende dal giorno e dalla fascia oraria: scriveteci per disponibilità e prezzi. Diviso tra tutti gli invitati, costa pochi euro a testa." },
+];
+const ritardo = (i) => ["", "ritardo-1", "ritardo-2"][i % 3];
+---
+<Base
+  titolo={`${SITE.nome} · Sala per feste e ritrovi a ${SITE.comune}`}
+  descrizione={`Sala per feste e ritrovi in affitto nel centro di ${SITE.comune} (${SITE.provincia}): compleanni, cene tra amici, partite e pranzi di famiglia per 30-40 persone. Il cibo lo portate voi, a pulire pensiamo noi.`}
+  descrizioneSocial="Il salotto grande che a casa non hai: una sala calda e accogliente per 30-40 persone, da affittare a ore."
+  waTesto="Vorrei sapere se lo spazio è libero per una data. Mi dite disponibilità e prezzi?"
+  menu={menu}
+>
+  <!-- 1. HERO -->
+  <HeroSfondo foto={heroFoto} alt="Una tavolata di famiglie di amici ride e mangia pizza, con i bambini seduti a tavola e i più piccoli nel seggiolone." posizione="60% 60%">
+    <h1 class="appare ritardo-1">Un posto dove <em>ritrovarsi.</em></h1>
+    <p class="intro appare ritardo-2">Il salotto grande che a casa non hai: una sala calda e accogliente per 30-40 persone, da affittare a ore.</p>
+    <div class="hero-cta appare ritardo-2">
+      <a class="btn btn-primario" href="#contatti"><IconaWhatsApp /> Chiedi disponibilità</a>
+      <a class="btn btn-secondario" href="#spazio">Scopri lo spazio</a>
+    </div>
+    <p class="chip-titolo appare ritardo-3" id="chip-titolo">Cosa volete organizzare?</p>
+    <ul class="chips appare ritardo-3" aria-labelledby="chip-titolo">
+      {OCCASIONI.map((o) => (
+        <li><a class="chip" href="#organizza" data-occasione={o.id}><span class="ico" aria-hidden="true">{o.icona}</span>{o.chip}</a></li>
+      ))}
+    </ul>
+    </HeroSfondo>
+
+  <!-- 2. COSA POTETE ORGANIZZARE -->
+  <section class="sezione-pesca" id="organizza" aria-labelledby="organizza-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Cosa potete organizzare</p>
+      <h2 class="appare" id="organizza-titolo">Uno spazio, <em>tante occasioni.</em></h2>
+      <p class="intro appare">Scegliete il motivo per cui vi ritrovate: vi diciamo cosa trovate e come organizzarvi.</p>
+      <Occasioni />
+    </div>
+  </section>
+
+  <!-- 3. LO SPAZIO -->
+  <section id="spazio" aria-labelledby="spazio-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Lo spazio</p>
+      <h2 class="appare" id="spazio-titolo">Semplice, caldo, <em>pronto per voi.</em></h2>
+      <p class="intro appare">Un locale ristrutturato nel centro di {SITE.comune}, pensato per stare bene insieme, a tutte le età.</p>
+
+      <ul class="dotazioni">
+        {dotazioni.map((d, i) => (
+          <li class:list={["dotazione appare", ritardo(i)]}>
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={d.icona} /></span>
+            <div><h3>{d.titolo}</h3><p>{d.testo}</p></div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="avviso-cibo appare">
+        <span class="ico" aria-hidden="true">🍕</span>
+        <p><strong>Il cibo lo portate voi:</strong> pizze d’asporto, torte, rinfreschi fatti in casa. Qui non si cucina, ma c’è un fornetto per scaldare e un frigorifero per tenere tutto al fresco.</p>
+      </div>
+
+      <Galleria />
+    </div>
+  </section>
+
+  <!-- 4. COME FUNZIONA -->
+  <section class="sezione-pesca" id="come-funziona" aria-labelledby="come-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Come funziona</p>
+      <h2 class="appare" id="come-titolo">Quattro passi, <em>zero pensieri.</em></h2>
+      <ol class="passi">
+        <li class="passo"><span class="num" aria-hidden="true">1</span><h3>Scriveteci</h3><p>Un messaggio su WhatsApp con l’occasione e quanti siete. Vi rispondiamo in fretta.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">2</span><h3>Scegliete data e fascia</h3><p>Pomeriggio, sera o giornata intera: fissiamo insieme quella che vi serve.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">3</span><h3>Ritirate le chiavi</h3><p>La prima volta ve le consegniamo di persona. Dalla volta dopo c’è una cassetta con codice.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">4</span><h3>Festeggiate</h3><p>Godetevi il tempo insieme. Al resto, pulizie comprese, pensiamo noi.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5. PERCHÉ QUI -->
+  <section id="perche" aria-labelledby="perche-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Perché qui</p>
+      <h2 class="appare" id="perche-titolo">«Dove ci vediamo?» <em>Qui.</em></h2>
+      <p class="intro appare">Quando ci si ritrova in tanti, con i bambini, le soluzioni di sempre hanno qualche limite.</p>
+      <div class="confronto">
+        <div class="alternativa appare"><span class="ico" aria-hidden="true">🍽️</span><h3>Al ristorante</h3><p>Menu e orari decisi da altri, e i bambini faticano a stare seduti a lungo.</p></div>
+        <div class="alternativa appare ritardo-1"><span class="ico" aria-hidden="true">🏠</span><h3>A casa di qualcuno</h3><p>Lo spazio non basta mai, e c’è sempre chi resta a sistemare dopo.</p></div>
+        <div class="alternativa appare ritardo-2"><span class="ico" aria-hidden="true">🧸</span><h3>In ludoteca</h3><p>Perfetta per i bimbi, meno per i grandi, che spesso restano in piedi.</p></div>
+        <div class="noi appare ritardo-3">
+          <p class="occhiello">Da noi</p>
+          <h3>Il salotto grande che a casa non hai.</h3>
+          <ul>
+            <li>Spazio per bimbi e per adulti</li>
+            <li>Cibo, orari e invitati li decidete voi</li>
+            <li>A pulire pensiamo noi</li>
+          </ul>
+        </div>
+      </div>
+      <p class="costo-testa appare">Diviso tra tutti, <em>costa pochi euro a testa.</em></p>
+    </div>
+  </section>
+
+  <!-- 6. REGOLE DELLA CASA -->
+  <section class="sezione-chiara" id="regole" aria-labelledby="regole-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Le regole della casa</p>
+      <h2 class="appare" id="regole-titolo">Poche regole, <em>per stare bene tutti.</em></h2>
+      <ul class="regole">
+        {regole.map((r, i) => (
+          <li class:list={["regola appare", ritardo(i)]}><span class="ico" aria-hidden="true">{r.icona}</span><h3>{r.titolo}</h3><p>{r.testo}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section id="faq" aria-labelledby="faq-titolo">
+    <div class="wrap">
+      <p class="occhiello appare" style="text-align:center">Domande frequenti</p>
+      <h2 class="appare" id="faq-titolo" style="text-align:center">Prima che ce lo chiediate</h2>
+      <div class="faq appare">
+        {faq.map((f, i) => (
+          <details open={i === 0}>
+            <summary>{f.d}</summary>
+            <div class="risposta"><p>{f.r}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. DOVE SIAMO E CONTATTI -->
+  <section class="sezione-pesca" id="contatti" aria-labelledby="contatti-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Dove siamo e contatti</p>
+      <h2 class="appare" id="contatti-titolo">Chiedete una data, <em>vi rispondiamo su WhatsApp.</em></h2>
+      <div class="contatti-grid">
+        <div class="appare">
+          <Recapiti />
+          <div class="mappa">
+            <div class="mappa-segnaposto">
+              <div>
+                <span class="pin" aria-hidden="true">📍</span>
+                <p>La mappa di Google si carica solo se la aprite.</p>
+                <button class="btn btn-secondario" data-carica-mappa={SITE.mappa}>Mostra la mappa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <FormEvento />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,32 @@
+---
+/*
+ * Hero con foto a tutto sfondo che sfuma verso il testo.
+ * foto / alt: immagine di sfondo; posizione: quale parte della foto tenere in vista (object-position).
+ * Slot predefinito: testi e pulsanti. Slot "badge": riquadri sopra la foto (solo da desktop).
+ */
+import { Picture } from "astro:assets";
+const { foto, alt, posizione = "70% 40%" } = Astro.props;
+
+// festone: bandierine lungo una curva morbida
+const colori = ["#E3B04B", "#3F7566", "#B44A24"];
+const bandierine = Array.from({ length: 16 }, (_, i) => {
+  const t = (i + 0.5) / 16;
+  const x = t * 1200;
+  const y = (1 - t) ** 2 * 8 + 2 * (1 - t) * t * 56 + t ** 2 * 4;
+  return { d: `M${x - 14} ${y}l28 1-13 30z`, fill: colori[i % 3] };
+});
+---
+<section class="hero-sfondo" id="top">
+  <div class="hero-bg">
+    <Picture src={foto} formats={["webp"]} widths={[800, 1280, 1920]} sizes="100vw" alt={alt}
+      loading="eager" fetchpriority="high" style={`object-position:${posizione}`} />
+  </div>
+  <svg class="festone-largo" viewBox="0 0 1200 90" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+    <path d="M0 8 Q600 56 1200 4" fill="none" stroke="#B88A67" stroke-width="2"/>
+    {bandierine.map((b) => <path d={b.d} fill={b.fill} />)}
+  </svg>
+  <div class="wrap hero-contenuto">
+    <div class="hero-testo"><slot /></div>
+  </div>
+  <div class="hero-badge" aria-hidden="true"><slot name="badge" /></div>
+</section>

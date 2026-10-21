@@ -1,0 +1,9 @@
+---
+// Link a un profilo social: finché l'indirizzo non è inserito, il link non porta da nessuna parte.
+import { isPlaceholder } from "../config.mjs";
+const { href, testo } = Astro.props;
+const manca = isPlaceholder(href);
+---
+{manca
+  ? <a href="#" data-segnaposto title="Link da inserire">{testo}</a>
+  : <a href={href} target="_blank" rel="noopener">{testo}</a>}

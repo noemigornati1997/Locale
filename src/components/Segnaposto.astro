@@ -1,0 +1,6 @@
+---
+// Mostra un valore della configurazione; se è ancora un segnaposto lo evidenzia in giallo.
+import { isPlaceholder } from "../config.mjs";
+const { valore } = Astro.props;
+---
+<span class:list={[{ ph: isPlaceholder(valore) }]}>{valore}</span>

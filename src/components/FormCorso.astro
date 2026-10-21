@@ -1,0 +1,42 @@
+---
+// Form «Chiedi disponibilità» per corsi e riunioni: compone il messaggio e apre WhatsApp (src/scripts/main.js).
+import IconaWhatsApp from "./IconaWhatsApp.astro";
+---
+<form class="form appare ritardo-1" data-wa-form="corso" novalidate>
+  <h3>Chiedi disponibilità</h3>
+  <p>Il messaggio si scrive da solo. Non salviamo nessun dato.</p>
+  <div class="campo">
+    <label for="c-attivita">Che attività?</label>
+    <input type="text" id="c-attivita" name="attivita" required placeholder="Es. corso di yoga, gruppo di lettura" aria-describedby="c-attivita-errore">
+    <span class="errore" id="c-attivita-errore">Scrivete che attività volete organizzare.</span>
+  </div>
+  <fieldset class="campo">
+    <legend>Con che frequenza?</legend>
+    <div class="opzioni">
+      <label><input type="radio" name="frequenza" value="Una volta" checked><span>Una volta</span></label>
+      <label><input type="radio" name="frequenza" value="Ogni settimana"><span>Ogni settimana</span></label>
+      <label><input type="radio" name="frequenza" value="Da definire"><span>Da definire</span></label>
+    </div>
+  </fieldset>
+  <fieldset class="campo">
+    <legend>Quando preferite?</legend>
+    <div class="opzioni">
+      <label><input type="radio" name="momento" value="Mattina" checked><span>Mattina</span></label>
+      <label><input type="radio" name="momento" value="Pomeriggio"><span>Pomeriggio</span></label>
+      <label><input type="radio" name="momento" value="Sera"><span>Sera</span></label>
+    </div>
+  </fieldset>
+  <div class="riga">
+    <div class="campo">
+      <label for="c-persone">Partecipanti (circa)</label>
+      <input type="number" id="c-persone" name="persone" min="1" max="60" inputmode="numeric" placeholder="Es. 12">
+    </div>
+    <div class="campo">
+      <label for="c-nome">Il vostro nome</label>
+      <input type="text" id="c-nome" name="nome" autocomplete="given-name" placeholder="Es. Elena">
+    </div>
+  </div>
+  <div class="anteprima" aria-live="polite"><small>Anteprima del messaggio</small><span data-anteprima style="white-space:pre-line"></span></div>
+  <button class="btn btn-whatsapp" type="submit"><IconaWhatsApp /> Apri WhatsApp</button>
+  <p class="form-nota">Il messaggio parte solo quando premete invio su WhatsApp.</p>
+</form>

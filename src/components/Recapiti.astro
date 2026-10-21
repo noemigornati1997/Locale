@@ -1,0 +1,10 @@
+---
+import { SITE } from "../config.mjs";
+import Segnaposto from "./Segnaposto.astro";
+import LinkSocial from "./LinkSocial.astro";
+---
+<ul class="recapiti">
+  <li><span class="ico" aria-hidden="true">📍</span><p><b>Indirizzo</b><span><Segnaposto valore={SITE.indirizzo} />, {SITE.comune} ({SITE.provincia}) · in centro</span></p></li>
+  <li><span class="ico" aria-hidden="true">💬</span><p><b>WhatsApp</b><Segnaposto valore={SITE.whatsappVisibile} /></p></li>
+  <li><span class="ico" aria-hidden="true">📷</span><p><b>Social</b><span><LinkSocial href={SITE.instagram} testo="Instagram" /> · <LinkSocial href={SITE.facebook} testo="Facebook" /></span></p></li>
+</ul>

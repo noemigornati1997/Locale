@@ -1,0 +1,86 @@
+---
+import "../styles/global.css";
+import { SITE, saluto, waUrl } from "../config.mjs";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import IconaWhatsApp from "../components/IconaWhatsApp.astro";
+
+/**
+ * titolo / descrizione: per Google (title e meta description)
+ * descrizioneSocial: testo dell'anteprima quando il link viene condiviso
+ * waTesto: messaggio del pulsante WhatsApp fisso su mobile
+ * menu: voci del menu in alto
+ */
+const { titolo, descrizione, descrizioneSocial, waTesto, menu } = Astro.props;
+const ogImage = Astro.site ? new URL("/og-image.jpg", Astro.site).href : "/og-image.jpg";
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const font = "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&display=swap";
+
+const datiStrutturati = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "EventVenue"],
+  name: SITE.nome,
+  description: descrizione,
+  image: ogImage,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: SITE.indirizzo,
+    addressLocality: SITE.comune,
+    addressRegion: SITE.provincia,
+    postalCode: SITE.cap,
+    addressCountry: "IT",
+  },
+  telephone: SITE.whatsappVisibile,
+  maximumAttendeeCapacity: SITE.capienza,
+  amenityFeature: ["Angolo bimbi", "TV grande", "Frigorifero e fornetto per scaldare", "Bagno"].map((name) => ({
+    "@type": "LocationFeatureSpecification", name, value: true,
+  })),
+  sameAs: [SITE.instagram, SITE.facebook],
+  ...(canonical && { url: canonical }),
+};
+---
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{titolo}</title>
+  <meta name="description" content={descrizione}>
+  <meta name="theme-color" content="#FFF8EF">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  {canonical && <link rel="canonical" href={canonical}>}
+
+  <!-- Open Graph: anteprima quando il link viene condiviso su WhatsApp e social -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content={titolo}>
+  <meta property="og:description" content={descrizioneSocial}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- font caricati senza bloccare la pagina -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href={font} onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href={font}></noscript>
+
+  <script is:inline>document.documentElement.classList.add("js");</script>
+  <script type="application/ld+json" set:html={JSON.stringify(datiStrutturati)} />
+</head>
+<body data-saluto={saluto()} data-whatsapp={SITE.whatsapp}>
+  <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+  <Header voci={menu} />
+  <main id="contenuto">
+    <slot />
+  </main>
+  <Footer />
+  <a class="btn btn-whatsapp wa-fisso" href={waUrl(`${saluto()} ${waTesto}`)} target="_blank" rel="noopener">
+    <IconaWhatsApp /> Scrivici su WhatsApp
+  </a>
+  <script>
+    import "../scripts/main.js";
+  </script>
+</body>
+</html>

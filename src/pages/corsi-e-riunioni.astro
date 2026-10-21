@@ -1,0 +1,107 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import HeroSfondo from "../components/HeroSfondo.astro";
+import Recapiti from "../components/Recapiti.astro";
+import FormCorso from "../components/FormCorso.astro";
+import { SITE } from "../config.mjs";
+import yoga from "../assets/foto/corsi-yoga-01.jpg";
+import costruzioni from "../assets/foto/bimbi-costruzioni-01.jpg";
+import gruppo from "../assets/foto/corsi-gruppo-01.jpg";
+import lettura from "../assets/foto/corsi-lettura-01.jpg";
+
+const menu = [
+  { href: "/#organizza", testo: "Feste e ritrovi" },
+  { href: "#attivita", testo: "Attività" },
+  { href: "#come-funziona", testo: "Come funziona" },
+  { href: "/corsi-e-riunioni/", testo: "Corsi e riunioni" },
+];
+
+const formati = [
+  { foto: costruzioni, alt: "Mani che giocano con mattoncini di legno su un tappeto morbido.", titolo: "Genitori e bambini", testo: "Corsi pre-parto, incontri con l’ostetrica, psicomotricità, inglese per bimbi, laboratori creativi." },
+  { foto: gruppo, alt: "Un gruppo di persone seduto sui tappetini in una sala ampia e luminosa.", titolo: "Benessere", testo: "Yoga, ginnastica dolce, meditazione e piccoli gruppi che hanno bisogno di uno spazio tranquillo." },
+  { foto: lettura, alt: "Mani che tengono libri aperti attorno a un tavolo durante un gruppo di lettura.", titolo: "Gruppi e associazioni", testo: "Riunioni, comitati, gruppi di lettura, serate di giochi da tavolo, piccoli workshop." },
+];
+
+const vantaggi = [
+  { icona: "🕘", titolo: "Affitto a ore", testo: "Una volta sola o un giorno fisso a settimana: scegliete voi la formula." },
+  { icona: "🪑", titolo: "Tavoli e sedie", testo: "Per 30-40 persone, da usare per lavorare seduti o da spostare per fare spazio." },
+  { icona: "📺", titolo: "TV grande", testo: "Utile per mostrare video o presentazioni al gruppo." },
+  { icona: "🔑", titolo: "Accesso semplice", testo: "Chiavi consegnate di persona la prima volta, poi cassetta con codice." },
+  { icona: "☕", titolo: "Frigorifero e fornetto", testo: "Per una pausa con tè, biscotti o una merenda portata da casa." },
+  { icona: "📍", titolo: `In centro a ${SITE.comune}`, testo: "Facile da raggiungere e da spiegare ai vostri partecipanti." },
+];
+---
+<Base
+  titolo={`Sala a ore per corsi e riunioni a ${SITE.comune} · ${SITE.nome}`}
+  descrizione={`Affitto a ore di una sala accogliente nel centro di ${SITE.comune} (${SITE.provincia}) per corsi, laboratori, riunioni e gruppi: yoga, psicomotricità, corsi per genitori, gruppi di lettura. Di giorno e nei feriali.`}
+  descrizioneSocial="Una sala calda e accogliente per i vostri corsi e incontri, solo quando vi serve."
+  waTesto="Vorrei affittare la sala per un corso o una riunione. Mi dite disponibilità e prezzi?"
+  menu={menu}
+>
+  <HeroSfondo foto={yoga} alt="Un piccolo gruppo seduto sui tappetini durante una lezione di yoga in una sala luminosa." posizione="80% 50%">
+    <p class="occhiello appare">Corsi e riunioni · {SITE.comune} centro</p>
+    <h1 class="appare ritardo-1">Una sala per i vostri <em>corsi e incontri.</em></h1>
+    <p class="intro appare ritardo-2">Calda, accogliente, in pieno centro. Si affitta a ore, di giorno e nei giorni feriali: senza contratti lunghi e senza un affitto fisso.</p>
+    <div class="hero-cta appare ritardo-2">
+      <a class="btn btn-primario" href="#contatti">Chiedi disponibilità</a>
+      <a class="btn btn-secondario" href="#attivita">Per quali attività</a>
+    </div>
+    <div class="badge" slot="badge"><span class="ico">🕘</span><span><b>A ore</b>anche ogni settimana</span></div>
+  </HeroSfondo>
+
+  <section class="sezione-pesca" id="attivita" aria-labelledby="attivita-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Per chi è</p>
+      <h2 class="appare" id="attivita-titolo">Pensata per chi <em>fa crescere il paese.</em></h2>
+      <p class="intro appare">Professionisti che tengono corsi, associazioni, gruppi di amici con una passione in comune.</p>
+      <ul class="formati">
+        {formati.map((f, i) => (
+          <li class:list={["formato appare", ["", "ritardo-1", "ritardo-2"][i]]}>
+            <Image src={f.foto} widths={[400, 800]} sizes="(max-width: 600px) 92vw, 360px" format="webp" alt={f.alt} loading="lazy" />
+            <div><h3>{f.titolo}</h3><p>{f.testo}</p></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="vantaggi" aria-labelledby="vantaggi-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Cosa trovate</p>
+      <h2 class="appare" id="vantaggi-titolo">Tutto quello che serve, <em>niente di più.</em></h2>
+      <ul class="vantaggi">
+        {vantaggi.map((v, i) => (
+          <li class:list={["appare", { "ritardo-1": i % 2 }]}><span class="ico" aria-hidden="true">{v.icona}</span><p><b>{v.titolo}</b><span>{v.testo}</span></p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sezione-pesca" id="come-funziona" aria-labelledby="come-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Come funziona</p>
+      <h2 class="appare" id="come-titolo">Dal primo messaggio <em>alla prima lezione.</em></h2>
+      <ol class="passi">
+        <li class="passo"><span class="num" aria-hidden="true">1</span><h3>Scriveteci</h3><p>Raccontateci l’attività, quante persone e con che frequenza.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">2</span><h3>Scegliete giorni e orari</h3><p>Una data singola o un appuntamento fisso: troviamo la fascia giusta.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">3</span><h3>Ritirate le chiavi</h3><p>La prima volta di persona, poi con la cassetta a codice.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">4</span><h3>Iniziate</h3><p>Voi pensate al vostro gruppo. Alle pulizie pensiamo noi.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contatti" aria-labelledby="contatti-titolo">
+    <div class="wrap">
+      <p class="occhiello appare">Disponibilità e prezzi</p>
+      <h2 class="appare" id="contatti-titolo">Raccontateci <em>la vostra attività.</em></h2>
+      <div class="contatti-grid">
+        <div class="appare">
+          <p class="intro" style="margin-bottom:24px">Il listino dipende dalla fascia e dalla frequenza: scriveteci per disponibilità e prezzi. Per chi prenota con regolarità troviamo insieme la formula più comoda.</p>
+          <Recapiti />
+        </div>
+        <FormCorso />
+      </div>
+    </div>
+  </section>
+</Base>

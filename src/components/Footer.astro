@@ -1,0 +1,39 @@
+---
+import { SITE } from "../config.mjs";
+import Logo from "./Logo.astro";
+import Segnaposto from "./Segnaposto.astro";
+import LinkSocial from "./LinkSocial.astro";
+const anno = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <Logo href="/" porta="#FBE6D2" />
+        <p>Il salotto grande che a casa non hai. Una sala per feste, ritrovi, corsi e riunioni nel centro di {SITE.comune}.</p>
+      </div>
+      <div>
+        <h2>Il sito</h2>
+        <ul>
+          <li><a href="/#organizza">Cosa organizzare</a></li>
+          <li><a href="/#spazio">Lo spazio</a></li>
+          <li><a href="/#regole">Regole della casa</a></li>
+          <li><a href="/corsi-e-riunioni/">Corsi e riunioni</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contatti</h2>
+        <ul>
+          <li><a href="#contatti">WhatsApp</a></li>
+          <li><LinkSocial href={SITE.instagram} testo="Instagram" /></li>
+          <li><LinkSocial href={SITE.facebook} testo="Facebook" /></li>
+          <li><Segnaposto valore={SITE.indirizzo} />, {SITE.comune}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-fondo">
+      <span>© {anno} <Segnaposto valore={SITE.nome} /> · {SITE.comune} ({SITE.provincia})</span>
+      <span>Foto: Unsplash (vedi CREDITS.md)</span>
+    </div>
+  </div>
+</footer>

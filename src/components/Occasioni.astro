@@ -1,0 +1,30 @@
+---
+// Selettore delle occasioni: i testi sono in src/data/occasioni.mjs
+import { Picture } from "astro:assets";
+import { OCCASIONI } from "../data/occasioni.mjs";
+import { saluto, waUrl } from "../config.mjs";
+---
+<div class="tabs appare" role="tablist" aria-label="Occasioni">
+  {OCCASIONI.map((o, i) => (
+    <button class="tab" role="tab" id={`tab-${o.id}`} aria-controls={`pannello-${o.id}`}
+      aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? undefined : -1}>
+      <span class="ico" aria-hidden="true">{o.icona}</span>{o.tab}
+    </button>
+  ))}
+</div>
+
+{OCCASIONI.map((o, i) => (
+  <div class="pannello" role="tabpanel" id={`pannello-${o.id}`} aria-labelledby={`tab-${o.id}`} tabindex="0" hidden={i !== 0}>
+    <Picture src={o.foto} formats={["webp"]} widths={[800, 1600]} sizes="(max-width: 880px) 92vw, 560px" alt={o.alt} loading="lazy" />
+    <div class="pannello-testo">
+      <p class="occhiello">{o.tab}</p>
+      <h3>{o.titolo}</h3>
+      <p>{o.testo}</p>
+      <ul class="cosa-trovi" aria-label="Cosa trovate">
+        {o.punti.map((p) => <li>{p}</li>)}
+      </ul>
+      <a class="btn btn-whatsapp" href={waUrl(`${saluto()} ${o.wa}`)} target="_blank" rel="noopener">{o.cta}</a>
+      {o.link && <a class="link-corsi" href={o.link.href}>{o.link.testo}</a>}
+    </div>
+  </div>
+))}

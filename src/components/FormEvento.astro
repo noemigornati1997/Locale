@@ -1,0 +1,42 @@
+---
+// Form «Chiedi disponibilità» per feste e ritrovi: compone il messaggio e apre WhatsApp (src/scripts/main.js).
+import { OCCASIONI } from "../data/occasioni.mjs";
+import IconaWhatsApp from "./IconaWhatsApp.astro";
+---
+<form class="form appare ritardo-1" data-wa-form="evento" novalidate>
+  <h3>Chiedi disponibilità</h3>
+  <p>Compilate i campi: il messaggio si scrive da solo. Non salviamo nessun dato.</p>
+  <div class="campo">
+    <label for="f-occasione">Occasione</label>
+    <select id="f-occasione" name="occasione">
+      {OCCASIONI.map((o) => <option>{o.tab}</option>)}
+      <option>Altro</option>
+    </select>
+  </div>
+  <div class="riga">
+    <div class="campo">
+      <label for="f-data">Data</label>
+      <input type="date" id="f-data" name="data" required aria-describedby="f-data-errore">
+      <span class="errore" id="f-data-errore">Scegliete una data.</span>
+    </div>
+    <div class="campo">
+      <label for="f-persone">Persone (circa)</label>
+      <input type="number" id="f-persone" name="persone" min="1" max="60" inputmode="numeric" placeholder="Es. 25">
+    </div>
+  </div>
+  <fieldset class="campo">
+    <legend>Fascia</legend>
+    <div class="opzioni">
+      <label><input type="radio" name="fascia" value="Pomeriggio" checked><span>Pomeriggio</span></label>
+      <label><input type="radio" name="fascia" value="Sera"><span>Sera</span></label>
+      <label><input type="radio" name="fascia" value="Giornata intera"><span>Giornata intera</span></label>
+    </div>
+  </fieldset>
+  <div class="campo">
+    <label for="f-nome">Il vostro nome</label>
+    <input type="text" id="f-nome" name="nome" autocomplete="given-name" placeholder="Es. Giulia">
+  </div>
+  <div class="anteprima" aria-live="polite"><small>Anteprima del messaggio</small><span data-anteprima style="white-space:pre-line"></span></div>
+  <button class="btn btn-whatsapp" type="submit"><IconaWhatsApp /> Apri WhatsApp</button>
+  <p class="form-nota">Il messaggio parte solo quando premete invio su WhatsApp.</p>
+</form>

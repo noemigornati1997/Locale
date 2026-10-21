@@ -1,0 +1,18 @@
+---
+/** voci: [{ href, testo }] — la voce della pagina corrente viene evidenziata */
+const { voci } = Astro.props;
+const percorso = Astro.url.pathname;
+import Logo from "./Logo.astro";
+---
+<header class="header">
+  <nav class="nav wrap" aria-label="Menu principale">
+    <Logo href="/" />
+    <button class="hamburger" aria-controls="menu" aria-expanded="false" aria-label="Apri il menu"><span></span></button>
+    <ul class="menu" id="menu">
+      {voci.map((v) => (
+        <li><a href={v.href} aria-current={v.href === percorso ? "page" : undefined}>{v.testo}</a></li>
+      ))}
+      <li><a class="btn btn-primario" href="#contatti">Chiedi disponibilità</a></li>
+    </ul>
+  </nav>
+</header>

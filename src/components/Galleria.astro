@@ -1,0 +1,51 @@
+---
+// Galleria a scorrimento (slider) con lightbox. Per cambiare le foto sostituite i file in src/assets/foto con lo stesso nome.
+import { Image, getImage } from "astro:assets";
+import sala from "../assets/foto/spazio-sala-01.jpg";
+import compleanno from "../assets/foto/compleanno-tavola-01.jpg";
+import pizzette from "../assets/foto/pizzette-01.jpg";
+import partita from "../assets/foto/partita-tavola-01.jpg";
+import bimbi from "../assets/foto/bimbi-angolo-01.jpg";
+import squadra from "../assets/foto/squadra-pallavolo-01.jpg";
+import panini from "../assets/foto/panini-festa-01.jpg";
+import torta from "../assets/foto/compleanno-torta-02.jpg";
+
+const foto = [
+  { src: sala, didascalia: "La sala", alt: "Sala luminosa con un lungo tavolo di legno, sedie in legno curvato e grandi finestre." },
+  { src: compleanno, didascalia: "Il compleanno", alt: "Bambini seduti a tavola durante una festa di compleanno, con dolci e bicchieri colorati." },
+  { src: pizzette, didascalia: "Pizzette e focaccia", alt: "Tavola da festa con vassoi di pizzette, focaccia, bicchieri e piatti di carta a pois colorati." },
+  { src: partita, didascalia: "La partita con gli amici", alt: "Amici seduti a una lunga tavolata esultano davanti alla partita sulla TV grande, con birre e pizze." },
+  { src: bimbi, didascalia: "L’angolo bimbi", alt: "Mani di un bambino che gioca con uno xilofono di legno colorato su un tappeto." },
+  { src: squadra, didascalia: "La pizzata di squadra", alt: "Una squadra di pallavolo di ragazze festeggia a tavola con pizze, allenatori e genitori." },
+  { src: panini, didascalia: "Il rinfresco", alt: "Vassoio di panini al latte farciti con un cestino di patatine." },
+  { src: torta, didascalia: "Le candeline", alt: "Ciambelle colorate con candeline accese e la candelina a forma di numero uno." },
+];
+const grandi = await Promise.all(foto.map((f) => getImage({ src: f.src, width: 1600, format: "webp" })));
+---
+<div class="slider appare" data-slider aria-roledescription="carosello" aria-label="Galleria fotografica">
+  <ul class="slider-track" tabindex="0" aria-label="Scorri le foto">
+    {foto.map((f, i) => (
+      <li class="slide" aria-label={`${i + 1} di ${foto.length}: ${f.didascalia}`}>
+        <button data-full={grandi[i].src} data-caption={f.didascalia}>
+          <Image src={f.src} widths={[480, 800, 1120]} sizes="(max-width: 600px) 84vw, (max-width: 1020px) 60vw, 560px" format="webp" alt={f.alt} loading="lazy" draggable="false" />
+          <span class="slide-didascalia">{f.didascalia}</span>
+        </button>
+      </li>
+    ))}
+  </ul>
+  <div class="slider-controlli">
+    <div class="slider-barra" aria-hidden="true"><span></span></div>
+    <button class="slider-freccia" data-dir="-1" aria-label="Foto precedenti">←</button>
+    <button class="slider-freccia" data-dir="1" aria-label="Foto successive">→</button>
+  </div>
+</div>
+<p class="nota-foto">Foto indicative: le immagini del locale arriveranno a fine lavori.</p>
+
+<dialog class="lightbox" aria-label="Foto ingrandita">
+  <div class="lightbox-inner">
+    <figure><img src="" alt=""><figcaption></figcaption></figure>
+    <button class="lb-btn lb-chiudi" aria-label="Chiudi">✕</button>
+    <button class="lb-btn lb-prec" aria-label="Foto precedente">←</button>
+    <button class="lb-btn lb-succ" aria-label="Foto successiva">→</button>
+  </div>
+</dialog>
